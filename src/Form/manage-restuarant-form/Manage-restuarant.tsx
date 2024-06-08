@@ -5,6 +5,10 @@ import { z } from "zod";
 import DetailSection from "./DetailSection";
 import { Separator } from "@/components/ui/separator";
 import CuisineForm from "./CuisineForm";
+import MenuSection from "./MenuSection";
+import ImageSection from "./ImageSection";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
     restaurantName: z.string({ required_error: "restuarant name is required" }),
@@ -26,18 +30,32 @@ type Props = {
     isLoading: boolean;
 }
 
-type restuarantFormData = z.infer<typeof formSchema>
+type RestuarantFormData = z.infer<typeof formSchema>
 
 const ManageRestuarantForm = ({ onsave,isLoading}: Props) => {
-    const form = useForm<restuarantFormData>({
+    const form = useForm<RestuarantFormData>({
         resolver:zodResolver(formSchema),
         defaultValues:{
             cuisines:[],
             menuItem:[{name:"",price:0}],
         }
     })
-    const onSubmit = (values:restuarantFormData)=>{
-      console.log(values)
+    const onSubmit = (values:RestuarantFormData)=>{
+        const formData = new FormData()
+        formData.append("restaurantName",values.restaurantName);
+        formData.append("city",values.city);
+        formData.append("country",values.country);
+        formData.append("deliveryPrice",(values.deliveryPrice * 100).toString());
+        formData.append("estimateDeliveryTime",values.estimateDeliveryTime.toString())
+        formData.append("imageFile",values.imageFile)
+        values.cuisines.forEach((cuisine,index)=>{
+           formData.append(`cuisines[${index}]`,cuisine);
+        })
+        values.menuItem.forEach((menuItems,index)=>{
+            formData.append(`menuItem[${index}][name]`,menuItems.name);
+            formData.append(`menuItem[${index}][price]`,(menuItems.price * 100).toString())
+        })
+        onsave(formData)
     }
     return (
         <Form {...form}>
@@ -45,6 +63,20 @@ const ManageRestuarantForm = ({ onsave,isLoading}: Props) => {
                <DetailSection/>
                <Separator/>
                <CuisineForm/>
+               <Separator/> 
+               <MenuSection/>
+               <Separator/>
+               <ImageSection/>
+               {
+                isLoading ? <Button className=" bg-orange-500 flex gap-2" disabled>
+                   <Loader2/>
+                   Loading...
+                </Button>:(
+                    <Button type="submit" className=" bg-orange-500">
+                      Submit
+                    </Button>
+                )
+               }
             </form>
         </Form>
     )

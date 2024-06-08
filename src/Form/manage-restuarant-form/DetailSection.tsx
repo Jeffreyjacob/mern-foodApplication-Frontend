@@ -15,7 +15,7 @@ const DetailSection = () => {
      </div>
      <FormField
        control={control}
-       name="restuarantName"
+       name="restaurantName"
        render={({field})=>(
         <FormItem>
             <FormLabel>Name</FormLabel>
@@ -69,7 +69,7 @@ const DetailSection = () => {
      />
      <FormField
        control={control}
-       name="estimatedDeliveryTime"
+       name="estimateDeliveryTime"
        render={({field})=>(
         <FormItem className="max-w-[25%]">
             <FormLabel>Estimated Delivery Time (minutes)</FormLabel>
