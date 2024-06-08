@@ -20,3 +20,22 @@ export type User = {
     city:string,
     country:string
 }
+
+export type MenuItem = {
+    name:string,
+    price:string
+}
+
+export type Restuarant = {
+    _id:string,
+    user:string,
+    restaurantName:string,
+    city:string
+    country:string
+    deliveryPrice:string
+    estimateDeliveryTime:string
+    cuisines:string[]
+    menuItem:MenuItem[]
+    imageUrl:string
+    lastUpdate:string
+}
