@@ -17,6 +17,11 @@ const UsernameMenu = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
                 <DropdownMenuGroup>
+                <DropdownMenuItem>
+                        <Link to='/manage-restuarant' className=" font-bold hover:text-orange-500" >
+                            Manage Restuarant
+                        </Link>
+                    </DropdownMenuItem>
                     <DropdownMenuItem>
                         <Link to='/user-profile' className=" font-bold hover:text-orange-500" >
                             User Profile

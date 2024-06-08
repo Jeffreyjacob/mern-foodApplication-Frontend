@@ -4,6 +4,7 @@ import ProfilePage from './pages/ProfilePage'
 import Layout from './Layout/layout'
 import AuthCallbackPage from './auth/AuthCallbackPage'
 import ProtectedRoutes from './auth/ProtectedRoutes'
+import ManageRestuarant from './pages/ManageRestuarant'
 
 function App() {
 
@@ -17,6 +18,11 @@ function App() {
         <Route path='/user-profile' element={
           <Layout>
             <ProfilePage/>
+          </Layout>
+          }/>
+           <Route path='/manage-restuarant' element={
+          <Layout>
+            <ManageRestuarant/>
           </Layout>
           }/>
         </Route>
