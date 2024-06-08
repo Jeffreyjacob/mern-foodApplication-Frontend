@@ -9,7 +9,7 @@ export const CreateRestuarantRequest = ()=>{
       const createRestuarant = async (restuarantFormData:FormData)=>{
         const accessToken = await getAccessTokenSilently()
         try{
-             const response = await fetch(`${API_BASE_URL}//api/v1/restuarant`,{
+             const response = await fetch(`${API_BASE_URL}/api/v1/restuarant`,{
                 method:"POST",
                 headers:{
                     Authorization: `Bearer ${accessToken}`,
