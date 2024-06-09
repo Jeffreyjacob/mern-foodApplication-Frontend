@@ -25,8 +25,12 @@ const formSchema = z.object({
         name: z.string().min(1, "name is requires"),
         price: z.coerce.number().min(1, "price is required")
     })),
-    imageFile: z.instanceof(File, { message: "image is required" })
-});
+    imageUrl:z.string().optional(),
+    imageFile: z.instanceof(File, { message: "image is required" }).optional()
+}).refine((data)=> data.imageFile || data.imageUrl,{
+    message:"Either image URL or imagwe File must be provided",
+    path:["imageFile"]
+})
 type Props = {
     onsave: (restuarantFormData: FormData) => void;
     isLoading: boolean;
@@ -71,7 +75,9 @@ const ManageRestuarantForm = ({ onsave,isLoading,Restuarant}: Props) => {
         formData.append("country",values.country);
         formData.append("deliveryPrice",(values.deliveryPrice * 100).toString());
         formData.append("estimateDeliveryTime",values.estimateDeliveryTime.toString())
-        formData.append("imageFile",values.imageFile)
+        if(values.imageFile){
+            formData.append("imageFile",values.imageFile)
+        }
         values.cuisines.forEach((cuisine,index)=>{
            formData.append(`cuisines[${index}]`,cuisine);
         })

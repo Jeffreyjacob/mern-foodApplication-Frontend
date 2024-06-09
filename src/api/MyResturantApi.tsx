@@ -62,3 +62,34 @@ export const useGetMyRestuarant = ()=>{
     }
     return {FetchRestuarant,isLoading}
 }
+
+
+export const useUpdateRestuarant = ()=>{
+    const {getAccessTokenSilently} = useAuth0();
+    const updateRestuarantRequest = async(restuarantFormData:FormData):Promise<Restuarant | undefined> =>{
+          const accessToken  = await getAccessTokenSilently()
+          try{
+          const response = await fetch(`${API_BASE_URL}/api/v1/restuarant`,{
+              method:"PUT",
+              headers:{
+                Authorization: `Bearer ${accessToken}`
+              },
+              body:restuarantFormData
+          })
+          if(!response.ok){
+             throw new Error("Failed to update restuarant")
+          }
+          return response.json()
+        }catch(error){
+            console.log(error)
+        }
+    }
+    const {mutate:UpdateRestuarant,isLoading,error,isSuccess} = useMutation(updateRestuarantRequest)
+    if(isSuccess){
+        toast.success("Restuarant Updated");
+    }
+    if(error){
+        toast.error("Unable to upddate restuarant");
+    }
+    return {UpdateRestuarant,isLoading}
+}
