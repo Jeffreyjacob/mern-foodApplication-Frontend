@@ -9,9 +9,6 @@ const ManageRestuarant = () => {
    if(getRestuarantLoading){
      return <span>Loading...</span>
    }
-   if(!FetchRestuarant){
-    return <span>Unable to fetch restuarant</span>
-   }
   const IsEditing = !!FetchRestuarant;
   return (
     <ManageRestuarantForm 
