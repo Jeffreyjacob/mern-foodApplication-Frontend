@@ -9,6 +9,8 @@ import MenuSection from "./MenuSection";
 import ImageSection from "./ImageSection";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { Restuarant } from "@/lib/type";
+import { useEffect } from "react";
 
 const formSchema = z.object({
     restaurantName: z.string({ required_error: "restuarant name is required" }),
@@ -28,11 +30,12 @@ const formSchema = z.object({
 type Props = {
     onsave: (restuarantFormData: FormData) => void;
     isLoading: boolean;
+    Restuarant?:Restuarant 
 }
 
 type RestuarantFormData = z.infer<typeof formSchema>
 
-const ManageRestuarantForm = ({ onsave,isLoading}: Props) => {
+const ManageRestuarantForm = ({ onsave,isLoading,Restuarant}: Props) => {
     const form = useForm<RestuarantFormData>({
         resolver:zodResolver(formSchema),
         defaultValues:{
@@ -40,6 +43,27 @@ const ManageRestuarantForm = ({ onsave,isLoading}: Props) => {
             menuItem:[{name:"",price:0}],
         }
     })
+
+    useEffect(()=>{
+       if(!Restuarant){
+        return;
+       }
+       // price lowest domination of 100 = 100pence == 1GBP
+       const deliveryPriceFormatted = parseInt(Restuarant.deliveryPrice)/100
+       const menuItemsFormatted = Restuarant.menuItem.map((menuItem)=>(
+        {
+            ...menuItem,price:parseInt(menuItem.price)/100
+        }
+       ))
+       const estimatedTimeFormat = parseInt(Restuarant.estimateDeliveryTime)
+       const updatedRestuarant = {
+        ...Restuarant,
+        deliveryPrice:deliveryPriceFormatted,
+        menuItem:menuItemsFormatted,
+        estimateDeliveryTime:estimatedTimeFormat
+       }
+       form.reset(updatedRestuarant)
+    },[form,Restuarant])
     const onSubmit = (values:RestuarantFormData)=>{
         const formData = new FormData()
         formData.append("restaurantName",values.restaurantName);
