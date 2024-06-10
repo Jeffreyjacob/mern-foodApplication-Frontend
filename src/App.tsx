@@ -5,6 +5,7 @@ import Layout from './Layout/layout'
 import AuthCallbackPage from './auth/AuthCallbackPage'
 import ProtectedRoutes from './auth/ProtectedRoutes'
 import ManageRestuarant from './pages/ManageRestuarant'
+import SearchPage from './pages/SearchPage'
 
 function App() {
 
@@ -14,6 +15,11 @@ function App() {
           <HomePage/>
         </Layout>}/>
         <Route path='/auth-callback' element={<AuthCallbackPage/>}/>
+        <Route path='/search/:city' element={
+          <Layout showHero={false}> 
+            <SearchPage/>
+          </Layout>
+          }/>
         <Route element={<ProtectedRoutes/>}>
         <Route path='/user-profile' element={
           <Layout>
