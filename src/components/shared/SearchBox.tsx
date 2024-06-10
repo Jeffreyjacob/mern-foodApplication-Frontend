@@ -5,11 +5,13 @@ import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { Search } from "lucide-react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useEffect } from "react";
 
 type Props = {
     onSubmit:(formData:SearchForm)=>void
     placeHolder:string;
     onReset?:()=>void;
+    searchQuery?:string;
 }
 const formSchema = z.object({
     searchQuery:z.string().min(1)
@@ -17,13 +19,17 @@ const formSchema = z.object({
 
 export type SearchForm = z.infer<typeof formSchema>;
 
-const SearchBox = ({onSubmit,onReset,placeHolder}:Props) => {
+const SearchBox = ({onSubmit,onReset,placeHolder,searchQuery}:Props) => {
    const form = useForm<SearchForm>({
      resolver:zodResolver(formSchema),
      defaultValues:{
-        searchQuery:""
+        searchQuery
      }
    })
+
+   useEffect(()=>{
+     form.reset({searchQuery});
+   },[form,searchQuery])
    const HandleReset = ()=>{
       form.reset({
         searchQuery:""
@@ -49,12 +55,10 @@ const SearchBox = ({onSubmit,onReset,placeHolder}:Props) => {
               </FormControl>
             </FormItem>
            )}/>
-            {form.formState.isDirty && (
             <Button type="button" variant="outline" 
             className="rounded-full" onClick={HandleReset}>
-               Clear
+               Reset
             </Button>
-          )}
           <Button type="submit" className="rounded-full bg-orange-500">
               Submit
           </Button>
