@@ -6,6 +6,7 @@ import AuthCallbackPage from './auth/AuthCallbackPage'
 import ProtectedRoutes from './auth/ProtectedRoutes'
 import ManageRestuarant from './pages/ManageRestuarant'
 import SearchPage from './pages/SearchPage'
+import DetailPage from './pages/DetailPage'
 
 function App() {
 
@@ -20,6 +21,10 @@ function App() {
             <SearchPage/>
           </Layout>
           }/>
+          <Route path='/detailPage/:id' element={<Layout showHero={false}>
+            <DetailPage/>
+          </Layout>}
+          />
         <Route element={<ProtectedRoutes/>}>
         <Route path='/user-profile' element={
           <Layout>

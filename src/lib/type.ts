@@ -22,6 +22,7 @@ export type User = {
 }
 
 export type MenuItem = {
+    _id:string
     name: string,
     price: string
 }
@@ -47,4 +48,19 @@ export type RestuarantSearchResponse = {
         page: number,
         pages: number
     }
+}
+
+export type CheckOutSessionRequest = {
+    cartItems:{
+        menuItemId:string;
+        name:string;
+        quantity:string;
+    }[];
+    deliveryDetails:{
+        email:string;
+        name:string;
+        addressLine1:string;
+        city:string
+    },
+    restaurantId:string
 }
