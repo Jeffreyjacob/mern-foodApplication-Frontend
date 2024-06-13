@@ -59,7 +59,7 @@ const ManageRestuarantForm = ({ onsave,isLoading,Restuarant}: Props) => {
             ...menuItem,price:parseInt(menuItem.price)/100
         }
        ))
-       const estimatedTimeFormat = parseInt(Restuarant.estimatedDeliveryTime)
+       const estimatedTimeFormat = parseInt(Restuarant.estimateDeliveryTime)
        const updatedRestuarant = {
         ...Restuarant,
         deliveryPrice:deliveryPriceFormatted,
