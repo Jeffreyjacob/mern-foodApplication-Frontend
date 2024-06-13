@@ -7,6 +7,7 @@ import ProtectedRoutes from './auth/ProtectedRoutes'
 import ManageRestuarant from './pages/ManageRestuarant'
 import SearchPage from './pages/SearchPage'
 import DetailPage from './pages/DetailPage'
+import OrderStatusPage from './pages/OrderStatusPage'
 
 function App() {
 
@@ -34,6 +35,11 @@ function App() {
            <Route path='/manage-restuarant' element={
           <Layout>
             <ManageRestuarant/>
+          </Layout>
+          }/>
+           <Route path='/order-status' element={
+          <Layout>
+            <OrderStatusPage/>
           </Layout>
           }/>
         </Route>
